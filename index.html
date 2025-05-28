@@ -6,128 +6,84 @@
   <style>
     @font-face {
       font-family: 'DNFBitBitv2';
-      font-style: normal;
-      font-weight: 400;
       src: url('https://cdn.df.nexon.com/img/common/font/DNFBitBitv2.otf') format('opentype');
     }
-
     body {
-      margin: 0;
       font-family: 'DNFBitBitv2', sans-serif;
       background: #111;
       color: white;
+      margin: 0;
+      padding: 0;
       text-align: center;
     }
-
-    #page1, #page2 {
-      display: none;
-    }
-    #page1.active, #page2.active {
-      display: block;
-    }
-
-    #container {
-      position: relative;
+    #page {
       width: 768px;
       height: 768px;
-      background-image: url('c70fd6a2-aa46-4017-886a-4c15adc562d1.png');
-      background-size: cover;
       margin: 20px auto;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+      position: relative;
+      background-image: url('template.png');
+      background-size: cover;
     }
-
     .profile-pic {
       position: absolute;
       top: 95px;
       left: 40px;
       width: 155px;
       height: 155px;
-      object-fit: cover;
       border-radius: 10px;
+      object-fit: cover;
     }
-
-    .text-input {
+    .text {
       position: absolute;
-      background: transparent;
-      border: none;
-      border-bottom: 2px solid white;
-      color: white;
       font-size: 16px;
-      outline: none;
-      width: 200px;
+      color: white;
     }
-    #nickname { top: 90px; left: 270px; }
-    #birthday { top: 115px; left: 270px; }
-    #mbti { top: 140px; left: 270px; }
-    #message { top: 165px; left: 270px; width: 220px; }
-
-    button {
+    .checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid white;
+      position: absolute;
+      cursor: pointer;
+    }
+    .checkbox.checked {
+      background-color: white;
+    }
+    #download {
       margin: 20px;
       padding: 10px 20px;
-      font-family: 'DNFBitBitv2';
       font-size: 16px;
-      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <div id="page1" class="active">
-    <h2>자기소개 입력</h2>
-    <input type="file" id="imgInput" accept="image/*"><br>
-    <input id="nickname" class="text-input" placeholder="닉네임">
-    <input id="birthday" class="text-input" placeholder="생일">
-    <input id="mbti" class="text-input" placeholder="MBTI">
-    <input id="message" class="text-input" placeholder="하고 싶은 말">
-    <br>
-    <button onclick="goToPage2()">다음 →</button>
-  </div>
+<div id="page">
+  <img id="profile" class="profile-pic" src="">
+  <div id="nickname" class="text" style="top:90px; left:270px;">닉네임</div>
+  <div id="birthday" class="text" style="top:115px; left:270px;">생일</div>
+  <div id="mbti" class="text" style="top:140px; left:270px;">MBTI</div>
+  <div id="message" class="text" style="top:165px; left:270px;">하고싶은 말</div>
 
-  <div id="page2">
-    <div id="container">
-      <img id="profileImage" class="profile-pic" src="" alt="">
-      <div id="render-nickname" class="text-input" style="top: 90px; left: 270px;"></div>
-      <div id="render-birthday" class="text-input" style="top: 115px; left: 270px;"></div>
-      <div id="render-mbti" class="text-input" style="top: 140px; left: 270px;"></div>
-      <div id="render-message" class="text-input" style="top: 165px; left: 270px; width: 220px;"></div>
-    </div>
-    <button onclick="downloadImage()">이미지로 저장하기</button>
-  </div>
+  <div class="checkbox" style="top:255px; left:135px;" onclick="toggle(this)"></div>
+  <div class="checkbox" style="top:255px; left:220px;" onclick="toggle(this)"></div>
+</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-  <script>
-    const imgInput = document.getElementById('imgInput');
-    const profileImage = document.getElementById('profileImage');
+<button id="download" onclick="capture()">이미지로 저장하기</button>
 
-    imgInput.addEventListener('change', function (e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        profileImage.src = event.target.result;
-        profileImage.dataset.uploaded = 'true';
-      };
-      reader.readAsDataURL(file);
-    });
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+function toggle(el) {
+  el.classList.toggle('checked');
+}
+function capture() {
+  html2canvas(document.getElementById('page')).then(canvas => {
+    const link = document.createElement('a');
+    link.href = canvas.toDataURL();
+    link.download = '자기소개표.png';
+    link.click();
+  });
+}
+</script>
 
-    function goToPage2() {
-      document.getElementById('page1').classList.remove('active');
-      document.getElementById('page2').classList.add('active');
-
-      document.getElementById('render-nickname').innerText = document.getElementById('nickname').value;
-      document.getElementById('render-birthday').innerText = document.getElementById('birthday').value;
-      document.getElementById('render-mbti').innerText = document.getElementById('mbti').value;
-      document.getElementById('render-message').innerText = document.getElementById('message').value;
-    }
-
-    function downloadImage() {
-      html2canvas(document.getElementById('container')).then(canvas => {
-        const link = document.createElement('a');
-        link.download = '자기소개표.png';
-        link.href = canvas.toDataURL();
-        link.click();
-      });
-    }
-  </script>
 </body>
 </html>
