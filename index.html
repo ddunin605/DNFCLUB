@@ -15,13 +15,22 @@
       margin: 0;
       font-family: 'DNFBitBitv2', sans-serif;
       background: #111;
+      color: white;
+      text-align: center;
+    }
+
+    #page1, #page2 {
+      display: none;
+    }
+    #page1.active, #page2.active {
+      display: block;
     }
 
     #container {
       position: relative;
       width: 768px;
       height: 768px;
-      background-image: url('던파동호회%20자기소개표.png');
+      background-image: url('c70fd6a2-aa46-4017-886a-4c15adc562d1.png');
       background-size: cover;
       margin: 20px auto;
       box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
@@ -45,27 +54,15 @@
       color: white;
       font-size: 16px;
       outline: none;
-      width: 180px;
+      width: 200px;
     }
-
-    #name { top: 90px; left: 270px; }
+    #nickname { top: 90px; left: 270px; }
     #birthday { top: 115px; left: 270px; }
     #mbti { top: 140px; left: 270px; }
     #message { top: 165px; left: 270px; width: 220px; }
 
-    .checkbox {
-      position: absolute;
-      transform: scale(1.2);
-    }
-
-    /* 예시 위치 - 실제 위치에 따라 추가 필요 */
-    #morning { top: 255px; left: 130px; }
-    #night { top: 255px; left: 260px; }
-    #gunners { top: 610px; left: 650px; }
-
     button {
-      display: block;
-      margin: 20px auto;
+      margin: 20px;
       padding: 10px 20px;
       font-family: 'DNFBitBitv2';
       font-size: 16px;
@@ -75,23 +72,27 @@
 </head>
 <body>
 
-  <div id="container">
-    <img id="profileImage" class="profile-pic" src="" alt="">
-    <input type="file" id="imgInput" accept="image/*" style="position:absolute; top:20px; left:20px;">
-
-    <!-- 텍스트 입력 예시 -->
-    <input id="name" class="text-input" placeholder="닉네임">
+  <div id="page1" class="active">
+    <h2>자기소개 입력</h2>
+    <input type="file" id="imgInput" accept="image/*"><br>
+    <input id="nickname" class="text-input" placeholder="닉네임">
     <input id="birthday" class="text-input" placeholder="생일">
     <input id="mbti" class="text-input" placeholder="MBTI">
     <input id="message" class="text-input" placeholder="하고 싶은 말">
-
-    <!-- 체크박스 예시 -->
-    <input type="checkbox" id="morning" class="checkbox">
-    <input type="checkbox" id="night" class="checkbox">
-    <input type="checkbox" id="gunners" class="checkbox">
+    <br>
+    <button onclick="goToPage2()">다음 →</button>
   </div>
 
-  <button onclick="downloadImage()">이미지로 저장하기</button>
+  <div id="page2">
+    <div id="container">
+      <img id="profileImage" class="profile-pic" src="" alt="">
+      <div id="render-nickname" class="text-input" style="top: 90px; left: 270px;"></div>
+      <div id="render-birthday" class="text-input" style="top: 115px; left: 270px;"></div>
+      <div id="render-mbti" class="text-input" style="top: 140px; left: 270px;"></div>
+      <div id="render-message" class="text-input" style="top: 165px; left: 270px; width: 220px;"></div>
+    </div>
+    <button onclick="downloadImage()">이미지로 저장하기</button>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script>
@@ -104,9 +105,20 @@
       const reader = new FileReader();
       reader.onload = function (event) {
         profileImage.src = event.target.result;
+        profileImage.dataset.uploaded = 'true';
       };
       reader.readAsDataURL(file);
     });
+
+    function goToPage2() {
+      document.getElementById('page1').classList.remove('active');
+      document.getElementById('page2').classList.add('active');
+
+      document.getElementById('render-nickname').innerText = document.getElementById('nickname').value;
+      document.getElementById('render-birthday').innerText = document.getElementById('birthday').value;
+      document.getElementById('render-mbti').innerText = document.getElementById('mbti').value;
+      document.getElementById('render-message').innerText = document.getElementById('message').value;
+    }
 
     function downloadImage() {
       html2canvas(document.getElementById('container')).then(canvas => {
