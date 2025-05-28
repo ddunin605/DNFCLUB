@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>던파 자기소개표</title>
+  <style>
+    @font-face {
+      font-family: 'DNFBitBitv2';
+      font-style: normal;
+      font-weight: 400;
+      src: url('https://cdn.df.nexon.com/img/common/font/DNFBitBitv2.otf') format('opentype');
+    }
+
+    body {
+      margin: 0;
+      font-family: 'DNFBitBitv2', sans-serif;
+      background: #111;
+    }
+
+    #container {
+      position: relative;
+      width: 768px;
+      height: 768px;
+      background-image: url('던파동호회%20자기소개표.png');
+      background-size: cover;
+      margin: 20px auto;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+
+    .profile-pic {
+      position: absolute;
+      top: 95px;
+      left: 40px;
+      width: 155px;
+      height: 155px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .text-input {
+      position: absolute;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid white;
+      color: white;
+      font-size: 16px;
+      outline: none;
+      width: 180px;
+    }
+
+    #name { top: 90px; left: 270px; }
+    #birthday { top: 115px; left: 270px; }
+    #mbti { top: 140px; left: 270px; }
+    #message { top: 165px; left: 270px; width: 220px; }
+
+    .checkbox {
+      position: absolute;
+      transform: scale(1.2);
+    }
+
+    /* 예시 위치 - 실제 위치에 따라 추가 필요 */
+    #morning { top: 255px; left: 130px; }
+    #night { top: 255px; left: 260px; }
+    #gunners { top: 610px; left: 650px; }
+
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-family: 'DNFBitBitv2';
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="container">
+    <img id="profileImage" class="profile-pic" src="" alt="">
+    <input type="file" id="imgInput" accept="image/*" style="position:absolute; top:20px; left:20px;">
+
+    <!-- 텍스트 입력 예시 -->
+    <input id="name" class="text-input" placeholder="닉네임">
+    <input id="birthday" class="text-input" placeholder="생일">
+    <input id="mbti" class="text-input" placeholder="MBTI">
+    <input id="message" class="text-input" placeholder="하고 싶은 말">
+
+    <!-- 체크박스 예시 -->
+    <input type="checkbox" id="morning" class="checkbox">
+    <input type="checkbox" id="night" class="checkbox">
+    <input type="checkbox" id="gunners" class="checkbox">
+  </div>
+
+  <button onclick="downloadImage()">이미지로 저장하기</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script>
+    const imgInput = document.getElementById('imgInput');
+    const profileImage = document.getElementById('profileImage');
+
+    imgInput.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        profileImage.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function downloadImage() {
+      html2canvas(document.getElementById('container')).then(canvas => {
+        const link = document.createElement('a');
+        link.download = '자기소개표.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+  </script>
+</body>
+</html>
