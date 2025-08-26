@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>던파동호회 자기소개표 - 채우기</title>
 
-<!-- 전역 글꼴: 비트비트체 하나로 통일 -->
 <style>
 @font-face{
   font-family:'DNFBitBitv2';
@@ -13,39 +12,46 @@
   font-weight:400;
   src:url('//cdn.df.nexon.com/img/common/font/DNFBitBitv2.otf') format('opentype');
 }
-:root{ --stage-w: 737px; --stage-h: 737px; }
-
+:root{
+  --stage-w: 737px;
+  --stage-h: 737px;
+  --txt-size: 16px; /* 기본 글자 크기 (슬라이더로 변경) */
+}
 html,body{
-  margin:0;
-  background:#0b0e12;
-  color:#e9eef5;
-  font-family:'DNFBitBitv2', sans-serif; /* 전역 기본 폰트 */
+  margin:0; background:#0b0e12; color:#e9eef5;
+  font-family:'DNFBitBitv2', sans-serif;
 }
 .wrap{
   display:grid; gap:16px;
-  grid-template-columns:minmax(280px,360px) var(--stage-w);
+  grid-template-columns: 260px var(--stage-w);
   padding:18px; place-content:start center;
 }
 .panel{
-  background:#131821; border:1px solid #202838; border-radius:12px; padding:14px;
+  background:#131821; border:1px solid #202838; border-radius:12px; padding:12px;
   box-shadow:0 6px 20px rgba(0,0,0,.35);
 }
-.panel h2{margin:0 0 10px; font-size:18px}
-.panel .row{display:grid; gap:8px; margin-bottom:10px}
-.panel label{font-size:13px; opacity:.9}
+.panel h2{margin:0 0 8px; font-size:18px}
+.panel .row{display:grid; gap:6px; margin-bottom:8px}
+.panel label{font-size:12px; opacity:.9}
 .panel input[type="text"],
 .panel input[type="file"],
+.panel input[type="range"],
 .panel textarea{
-  width:100%; padding:10px 12px; border-radius:10px; border:1px solid #2a3348;
+  width:100%; padding:8px 10px; border-radius:10px; border:1px solid #2a3348;
   background:#0f141d; color:#e9eef5; outline:none; font-family:'DNFBitBitv2',sans-serif;
+  font-size:14px;
 }
-.panel .grid2{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+.panel .grid2{display:grid; grid-template-columns:1fr 1fr; gap:6px}
 .panel button{
-  width:100%; padding:12px; border:0; border-radius:12px; font-weight:700; cursor:pointer;
+  width:100%; padding:10px; border:0; border-radius:12px; font-weight:700; cursor:pointer;
   background:#5a7cff; color:#0b0e12; font-family:'DNFBitBitv2',sans-serif;
 }
 
-/* 캡처 대상 */
+/* 체크박스 영역 */
+.chkgroup{display:grid; gap:6px; max-height:260px; overflow:auto; border:1px solid #202838; border-radius:10px; padding:8px}
+.chkgroup h3{margin:0; font-size:14px}
+.chkline{display:grid; grid-template-columns:1fr 1fr; gap:4px 8px}
+
 .stage{
   position:relative; width:var(--stage-w); height:var(--stage-h); background:#000; overflow:hidden;
   border-radius:12px; box-shadow:0 12px 28px rgba(0,0,0,.5); border:1px solid #202838;
@@ -53,11 +59,9 @@ html,body{
 .stage img.layer{
   position:absolute; inset:0; width:100%; height:100%; object-fit:contain; pointer-events:none;
 }
-
-/* 자기소개표 위에 찍히는 텍스트 공통 */
 .t{
   position:absolute; white-space:pre-wrap; color:#fff; pointer-events:none;
-  font-family:'DNFBitBitv2', sans-serif; font-size:5.5pt; font-weight:400; line-height:1.15;
+  font-family:'DNFBitBitv2', sans-serif; font-size:var(--txt-size); font-weight:400; line-height:1.15;
   text-shadow:
     0 0 2px rgba(0,0,0,.85),
     0 0 4px rgba(0,0,0,.85),
@@ -66,12 +70,13 @@ html,body{
     -1px 0 0 rgba(0,0,0,.9),
     0 -1px 0 rgba(0,0,0,.9);
 }
-
-/* 프로필 이미지 마스크 (위치/크기는 JS에서 비율계산) */
-#profileBox{
-  position:absolute; overflow:hidden; border-radius:12px; pointer-events:none; text-shadow:none;
-}
+/* 프로필 이미지 박스 (좌표/크기는 JS에서 비율로) */
+#profileBox{position:absolute; overflow:hidden; border-radius:12px; pointer-events:none; text-shadow:none;}
 #profileImg{width:100%; height:100%; object-fit:cover;}
+
+/* 좌표 디버그 */
+#coord{position:absolute; right:8px; bottom:8px; font-size:12px; background:rgba(0,0,0,.5); padding:4px 6px; border-radius:6px}
+#dot{position:absolute; width:6px; height:6px; border-radius:50%; background:#ffdf5a; pointer-events:none; display:none}
 </style>
 </head>
 <body>
@@ -102,7 +107,7 @@ html,body{
       </div>
       <div>
         <label>생일</label>
-        <input id="inBirthday" type="text" placeholder="예: 08-26" />
+        <input id="inBirthday" type="text" placeholder="예: 0826" />
       </div>
     </div>
 
@@ -113,71 +118,122 @@ html,body{
       </div>
       <div>
         <label>하고싶은 말</label>
-        <input id="inMessage" type="text" placeholder="예: 잘 부탁드립니다!" />
+        <input id="inMessage" type="text" placeholder="예: 잘 부탁드려용~" />
       </div>
+    </div>
+
+    <div class="row">
+      <label>폰트 크기: <span id="sizeVal">16</span>px</label>
+      <input id="fontSize" type="range" min="10" max="28" step="1" value="16">
     </div>
 
     <div class="row">
       <button id="btnDownload">PNG로 다운로드</button>
     </div>
+
+    <!-- 체크박스(레이어 토글) -->
+    <div class="row chkgroup">
+      <h3>체크 레이어</h3>
+      <div class="chkline" id="checks"></div>
+    </div>
+
+    <div class="row">
+      <label><input id="debugToggle" type="checkbox"> 좌표 디버그 모드</label>
+    </div>
   </div>
 
   <!-- 캡처 대상 -->
   <div id="stage" class="stage" aria-label="capture-target">
-    <!-- 배경 (GitHub RAW) -->
-    <img id="bg" class="layer" alt="배경"
-      src="https://raw.githubusercontent.com/ddunin605/DNFCLUB/c23aaf1943ca57a287fcc306da27b1080f3ce5d2/%EB%8D%98%ED%8C%8C%EB%8F%99%ED%98%B8%ED%9A%8C%20%EC%9E%90%EA%B8%B0%EC%86%8C%EA%B0%9C%ED%91%9C.png"
-      crossOrigin="anonymous" />
+    <!-- 배경: 같은 폴더에 PNG 파일 두면 됨 -->
+    <img id="bg" class="layer" alt="배경" src="던파동호회 자기소개표.png" />
 
     <!-- 프로필 사진 -->
     <div id="profileBox"><img id="profileImg" alt=""></div>
 
-    <!-- 프로필란 텍스트 (모두 비트비트체 5.5pt) -->
+    <!-- 프로필란 텍스트 -->
     <div id="tAdventure" class="t"></div>
     <div id="tServer"    class="t"></div>
     <div id="tNickname"  class="t"></div>
     <div id="tBirthday"  class="t"></div>
     <div id="tMBTI"      class="t"></div>
     <div id="tMessage"   class="t"></div>
+
+    <!-- 디버그 -->
+    <div id="coord"></div>
+    <div id="dot"></div>
   </div>
 </div>
 
-<!-- html2canvas -->
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
-/* ===== 좌표 입력(기준 737×737) ===== */
-const BASE = { w: 737, h: 737 };     // 네가 준 좌표 기준
-// 프로필 이미지 위치/크기
+/* ===== 좌표(737×737 기준) ===== */
+const BASE = { w:737, h:737 };
 const PROFILE = { x:39, y:192, w:156, h:156 };
-// 텍스트 좌표
 const POS = {
-  adventure: { x:225.2, y:228.05, width:240 },
-  server:    { x:277.93, y:258.68, width:240 },
-  nickname:  { x:298.93, y:296.68, width:240 },
-  birthday:  { x:584.93, y:216.68, width:240 },
-  mbti:      { x:613.93, y:256.68, width:200 },
-  message:   { x:658.93, y:296.68, width:260 }
+  adventure:{ x:225.2, y:228.05, width:240 },
+  server:   { x:277.93, y:258.68, width:240 },
+  nickname: { x:298.93, y:296.68, width:240 },
+  birthday: { x:584.93, y:216.68, width:240 },
+  mbti:     { x:613.93, y:256.68, width:200 },
+  message:  { x:658.93, y:296.68, width:260 }
 };
 
-const $ = s => document.querySelector(s);
-const stage = $('#stage');
-const bg = $('#bg');
+/* ===== 레이어 파일명 매핑(같은 폴더) ===== */
+const LAYERS = [
+  // 2. 플레이 시간
+  ['layPlayMorning','21.png','아침'], ['layPlayNoon','22.png','낮'],
+  ['layPlayEvening','23.png','저녁'], ['layPlayDawn','24.png','새벽'],
+  ['layPlayWeekday','25.png','평일반'], ['layPlayWeekend','26.png','주말반'],
+  // 3. 플레이 성향
+  ['layStyleSpecUp','31.png','스펙업'], ['layStyleStory','32.png','스토리'],
+  ['layStyleCodi','33.png','코디'], ['layStyleArena','34.png','결투장'],
+  ['layStyleWild','35.png','야생'], ['layStyleSolo','36.png','솔플'],
+  ['layStyleFriends','37.png','지인팟'], ['layStyleGuild','38.png','길드팟'],
+  // 4. 오픈카톡
+  ['layOpenChatTalk','41.png','수다'], ['layOpenChatInfo','42.png','정보공유'],
+  ['layOpenChatParty','43.png','파티모집'], ['layOpenChatLurk','44.png','눈팅'],
+  ['layOpenChatTrade','45.png','거래'],
+  // 5. 디스코드
+  ['layDiscordYes','51.png','디스코드 가능'], ['layDiscordNo','52.png','불가능'],
+  ['layMicOn','53.png','마이크 O'], ['layListenOnly','54.png','듣기만'],
+  ['layMicOff','55.png','마이크 X'],
+  // 6. 알아지는거
+  ['laySocialLike','61.png','좋다'], ['laySocialDislike','62.png','싫다'],
+  ['laySocialOnlyMe','63.png','나만 할줄안다'], ['laySocialDontCare','64.png','상관없음'],
+  // 7. 셋팅 지적
+  ['layJudgeYes','71.png','좋아요'], ['layJudgeNo','72.png','싫어요'],
+  // 8. 소통방법
+  ['layCommStartPlease','81.png','먼저 말 걸어주세요'], ['layCommJokeOk','82.png','장난치셔도 돼요'],
+  // 9. 저는!
+  ['laySelfNewbie','91.png','뉴비'], ['laySelfVeteran','92.png','고인물'],
+  ['laySelfReturn','93.png','복귀'], ['laySelfFunLover','94.png','놀이좋아'],
+  // 10. 직업
+  ['layJobSlayer','101.png','귀검사'], ['layJobFighter','102.png','격투가'],
+  ['layJobGunner','103.png','거너'], ['layJobMage','104.png','마법사'],
+  ['layJobPriest','105.png','프리스트'], ['layJobThief','106.png','도적'],
+  ['layJobKnight','107.png','나이트'], ['layJobLancer','108.png','마창사'],
+  ['layJobAgent','109.png','총검사'], ['layJobYacha','110.png','야차'],
+  ['layJobSide','111.png','외전'],
+];
 
-/* 비율 배치 유틸리티 */
+const $ = s => document.querySelector(s);
+const stage = $('#stage'); const bg = $('#bg');
+
+/* 비율 유틸 */
 function toPXX(x){ return x / BASE.w * stage.clientWidth; }
 function toPXY(y){ return y / BASE.h * stage.clientHeight; }
 function setRect(el, x, y, w, h){
   el.style.left = toPXX(x) + 'px';
   el.style.top  = toPXY(y) + 'px';
-  if (w != null) el.style.width  = toPXX(w) + 'px';
-  if (h != null) el.style.height = toPXY(h) + 'px';
+  if (w!=null) el.style.width  = toPXX(w) + 'px';
+  if (h!=null) el.style.height = toPXY(h) + 'px';
 }
 function placeText(el, cfg, txt){
   el.textContent = txt || '';
   setRect(el, cfg.x, cfg.y, cfg.width ?? 240, null);
 }
 
-/* 입력 → 반영 */
+/* 입력 ↔ 미리보기 */
 function bindAll(){
   placeText($('#tAdventure'), POS.adventure, $('#inAdventure').value);
   placeText($('#tServer'),    POS.server,    $('#inServer').value);
@@ -190,26 +246,54 @@ function bindAll(){
   $(id).addEventListener('input', bindAll);
 });
 
-/* 프로필 업로드 */
-$('#inProfileFile').addEventListener('change', e=>{
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ev=> $('#profileImg').src = ev.target.result;
-  reader.readAsDataURL(file);
+/* 폰트 크기 */
+const sizeInput = $('#fontSize'), sizeVal = $('#sizeVal');
+sizeInput.addEventListener('input', ()=>{
+  document.documentElement.style.setProperty('--txt-size', sizeInput.value + 'px');
+  sizeVal.textContent = sizeInput.value;
 });
 
-/* 배경 로드 후: 스테이지를 자연크기에 맞추고 비율 배치 */
-async function initLayout(){
-  await new Promise(res=>{
-    if (bg.complete) return res();
-    bg.onload = bg.onerror = res;
+/* 프로필 업로드 */
+$('#inProfileFile').addEventListener('change', e=>{
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ev => $('#profileImg').src = ev.target.result;
+  r.readAsDataURL(f);
+});
+
+/* 체크박스 & 레이어 초기화 */
+(function setupLayers(){
+  const box = $('#checks');
+  LAYERS.forEach(([id, file, label])=>{
+    // 체크박스
+    const lbl = document.createElement('label');
+    lbl.style.fontSize = '12px';
+    const input = document.createElement('input');
+    input.type = 'checkbox'; input.dataset.layer = id; input.dataset.src = file;
+    lbl.appendChild(input); lbl.append(' ' + label);
+    box.appendChild(lbl);
+
+    // 스테이지 레이어 <img>
+    const img = document.createElement('img');
+    img.id = id; img.className = 'layer'; img.style.display = 'none';
+    stage.appendChild(img);
   });
-  const w = bg.naturalWidth || BASE.w;
-  const h = bg.naturalHeight || BASE.h;
+
+  box.addEventListener('change', e=>{
+    const t = e.target;
+    if(!t.matches('input[type=checkbox][data-layer]')) return;
+    const img = document.getElementById(t.dataset.layer);
+    if (t.checked) { if(!img.src) img.src = t.dataset.src; img.style.display = 'block'; }
+    else img.style.display = 'none';
+  });
+})();
+
+/* 배경 로드 후 크기 맞추고 배치 */
+async function initLayout(){
+  await new Promise(res=>{ if(bg.complete) res(); else bg.onload = bg.onerror = res; });
+  const w = bg.naturalWidth || BASE.w, h = bg.naturalHeight || BASE.h;
   document.documentElement.style.setProperty('--stage-w', w + 'px');
   document.documentElement.style.setProperty('--stage-h', h + 'px');
-
   requestAnimationFrame(()=>{
     setRect($('#profileBox'), PROFILE.x, PROFILE.y, PROFILE.w, PROFILE.h);
     bindAll();
@@ -217,32 +301,35 @@ async function initLayout(){
 }
 initLayout();
 
-/* 리사이즈 대응(혹시 외부 스타일 바뀔 경우 대비) */
-window.addEventListener('resize', ()=>{
-  setRect($('#profileBox'), PROFILE.x, PROFILE.y, PROFILE.w, PROFILE.h);
-  bindAll();
+/* 좌표 디버그 */
+const coord = $('#coord'), dot = $('#dot'), dbg = $('#debugToggle');
+stage.addEventListener('mousemove', e=>{
+  if(!dbg.checked) return;
+  const rect = stage.getBoundingClientRect();
+  const x = e.clientX - rect.left, y = e.clientY - rect.top;
+  const bx = Math.round(x / stage.clientWidth * BASE.w);
+  const by = Math.round(y / stage.clientHeight * BASE.h);
+  coord.textContent = `x ${bx} / y ${by}`;
+  dot.style.left = (x-3)+'px'; dot.style.top = (y-3)+'px'; dot.style.display='block';
 });
+stage.addEventListener('mouseleave', ()=>{ dot.style.display='none'; coord.textContent=''; });
 
 /* PNG 다운로드 */
 async function downloadPNG(){
-  await document.fonts.ready; // 비트비트체 로딩 보장
+  await document.fonts.ready;
   await Promise.all([...stage.querySelectorAll('img')].map(img=>{
     if(!img.src) return Promise.resolve();
     if(img.complete) return Promise.resolve();
     return new Promise(res=>{ img.onload = img.onerror = res; });
   }));
-  const canvas = await html2canvas(stage,{
-    backgroundColor:null,
-    scale:3,
-    useCORS:true,
-    imageTimeout:8000
-  });
-  const a=document.createElement('a');
-  a.download='던파동호회_자기소개표.png';
-  a.href=canvas.toDataURL('image/png');
+  const canvas = await html2canvas(stage, { backgroundColor:null, scale:3 });
+  const a = document.createElement('a');
+  a.download = '던파동호회_자기소개표.png';
+  a.href = canvas.toDataURL('image/png');
   a.click();
 }
 document.getElementById('btnDownload').addEventListener('click', downloadPNG);
 </script>
 </body>
 </html>
+`
