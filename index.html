@@ -1,89 +1,196 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>던파 자기소개표</title>
-  <style>
-    @font-face {
-      font-family: 'DNFBitBitv2';
-      src: url('https://cdn.df.nexon.com/img/common/font/DNFBitBitv2.otf') format('opentype');
-    }
-    body {
-      font-family: 'DNFBitBitv2', sans-serif;
-      background: #111;
-      color: white;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-    #page {
-      width: 768px;
-      height: 768px;
-      margin: 20px auto;
-      position: relative;
-      background-image: url('template.png');
-      background-size: cover;
-    }
-    .profile-pic {
-      position: absolute;
-      top: 95px;
-      left: 40px;
-      width: 155px;
-      height: 155px;
-      border-radius: 10px;
-      object-fit: cover;
-    }
-    .text {
-      position: absolute;
-      font-size: 16px;
-      color: white;
-    }
-    .checkbox {
-      width: 20px;
-      height: 20px;
-      border: 2px solid white;
-      position: absolute;
-      cursor: pointer;
-    }
-    .checkbox.checked {
-      background-color: white;
-    }
-    #download {
-      margin: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>던파동호회 자기소개표 - 채우기</title>
+
+<!-- 비트비트체 -->
+<style>
+@font-face{
+  font-family:'DNFBitBitv2';
+  font-style:normal;
+  font-weight:400;
+  src:url('//cdn.df.nexon.com/img/common/font/DNFBitBitv2.otf') format('opentype');
+}
+</style>
+
+<style>
+  :root{
+    --stage-w: 737px;
+    --stage-h: 737px;
+  }
+  html,body{margin:0; background:#0b0e12; color:#e9eef5; font-family:system-ui,-apple-system,Segoe UI,Roboto,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;}
+  .wrap{display:grid; gap:16px; grid-template-columns: minmax(280px, 360px) var(--stage-w); padding:18px; place-content:start center;}
+  .panel{background:#131821; border:1px solid #202838; border-radius:12px; padding:14px; box-shadow:0 6px 20px rgba(0,0,0,.35);}
+  .panel h2{margin:0 0 10px; font-size:18px}
+  .panel .row{display:grid; gap:8px; margin-bottom:10px}
+  .panel label{font-size:13px; opacity:.9}
+  .panel input[type="text"],
+  .panel textarea{width:100%; padding:10px 12px; border-radius:10px; border:1px solid #2a3348; background:#0f141d; color:#e9eef5; outline:none;}
+  .panel textarea{min-height:72px; resize:vertical}
+  .panel .grid2{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+  .panel button{width:100%; padding:12px; border:0; border-radius:12px; font-weight:700; cursor:pointer; background:#5a7cff; color:#0b0e12}
+
+  /* 캡처 대상 */
+  .stage{position:relative; width:var(--stage-w); height:var(--stage-h); background:#000; overflow:hidden; border-radius:12px; box-shadow:0 12px 28px rgba(0,0,0,.5); border:1px solid #202838;}
+  .stage img.layer{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none;}
+
+  /* 공통 텍스트 레이어 */
+  .t{position:absolute; white-space:pre-wrap; color:#fff; pointer-events:none;
+    text-shadow:
+      0 0 2px rgba(0,0,0,.85),
+      0 0 4px rgba(0,0,0,.85),
+      0 1px 0 rgba(0,0,0,.9),
+      1px 0 0 rgba(0,0,0,.9),
+      -1px 0 0 rgba(0,0,0,.9),
+      0 -1px 0 rgba(0,0,0,.9);
+  }
+
+  /* 프로필란 전용: 비트비트체 + 5.5pt */
+  .bit{font-family:'DNFBitBitv2', system-ui, sans-serif; font-size:5.5pt; font-weight:400; line-height:1.15;}
+
+  /* 프로필 이미지 마스크 */
+  #profileBox{
+    position:absolute; left:39px; top:192px;
+    width:156px; height:156px;
+    overflow:hidden; border-radius:12px; pointer-events:none; text-shadow:none;
+  }
+  #profileImg{width:100%; height:100%; object-fit:cover;}
+</style>
 </head>
 <body>
+<div class="wrap">
+  <div class="panel">
+    <h2>입력 / 옵션</h2>
 
-<div id="page">
-  <img id="profile" class="profile-pic" src="">
-  <div id="nickname" class="text" style="top:90px; left:270px;">닉네임</div>
-  <div id="birthday" class="text" style="top:115px; left:270px;">생일</div>
-  <div id="mbti" class="text" style="top:140px; left:270px;">MBTI</div>
-  <div id="message" class="text" style="top:165px; left:270px;">하고싶은 말</div>
+    <div class="row">
+      <label>프로필 이미지 업로드</label>
+      <input id="inProfileFile" type="file" accept="image/*">
+    </div>
 
-  <div class="checkbox" style="top:255px; left:135px;" onclick="toggle(this)"></div>
-  <div class="checkbox" style="top:255px; left:220px;" onclick="toggle(this)"></div>
+    <div class="row grid2">
+      <div>
+        <label>모험단</label>
+        <input id="inAdventure" type="text" placeholder="예: 떠닝단" />
+      </div>
+      <div>
+        <label>서버</label>
+        <input id="inServer" type="text" placeholder="예: 바칼" />
+      </div>
+    </div>
+
+    <div class="row grid2">
+      <div>
+        <label>닉네임</label>
+        <input id="inNickname" type="text" placeholder="예: 떠닝" />
+      </div>
+      <div>
+        <label>생일</label>
+        <input id="inBirthday" type="text" placeholder="예: 08-26" />
+      </div>
+    </div>
+
+    <div class="row grid2">
+      <div>
+        <label>MBTI</label>
+        <input id="inMBTI" type="text" placeholder="예: INFJ" />
+      </div>
+      <div>
+        <label>하고싶은 말</label>
+        <input id="inMessage" type="text" placeholder="예: 잘 부탁드립니다!" />
+      </div>
+    </div>
+
+    <div class="row">
+      <button id="btnDownload">PNG로 다운로드</button>
+    </div>
+  </div>
+
+  <!-- ===== 캡처 대상 ===== -->
+  <div id="stage" class="stage" aria-label="capture-target">
+    <!-- 배경 (GitHub Raw 링크) -->
+    <img id="bg" class="layer" alt="배경"
+         src="https://raw.githubusercontent.com/ddunin605/DNFCLUB/c23aaf1943ca57a287fcc306da27b1080f3ce5d2/%EB%8D%98%ED%8C%8C%EB%8F%99%ED%98%B8%ED%9A%8C%20%EC%9E%90%EA%B8%B0%EC%86%8C%EA%B0%9C%ED%91%9C.png"
+         crossOrigin="anonymous" />
+
+    <!-- 프로필 사진 -->
+    <div id="profileBox"><img id="profileImg" alt=""></div>
+
+    <!-- 프로필란 텍스트 -->
+    <div id="tAdventure" class="t bit"></div>
+    <div id="tServer"    class="t bit"></div>
+    <div id="tNickname"  class="t bit"></div>
+    <div id="tBirthday"  class="t bit"></div>
+    <div id="tMBTI"      class="t bit"></div>
+    <div id="tMessage"   class="t bit"></div>
+  </div>
 </div>
 
-<button id="download" onclick="capture()">이미지로 저장하기</button>
-
+<!-- html2canvas -->
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
-function toggle(el) {
-  el.classList.toggle('checked');
-}
-function capture() {
-  html2canvas(document.getElementById('page')).then(canvas => {
-    const link = document.createElement('a');
-    link.href = canvas.toDataURL();
-    link.download = '자기소개표.png';
-    link.click();
-  });
-}
-</script>
+const POS = {
+  adventure: { x:225.2, y:228.05, width:240 },
+  server:    { x:277.93, y:258.68, width:240 },
+  nickname:  { x:298.93, y:296.68, width:240 },
+  birthday:  { x:584.93, y:216.68, width:240 },
+  mbti:      { x:613.93, y:256.68, width:200 },
+  message:   { x:658.93, y:296.68, width:260 }
+};
 
+const $ = s => document.querySelector(s);
+function place(el, cfg, txt){
+  el.textContent = txt || '';
+  el.style.left = (cfg.x||0) + 'px';
+  el.style.top  = (cfg.y||0) + 'px';
+  if (cfg.width) el.style.width = cfg.width + 'px';
+}
+function bindAll(){
+  place($('#tAdventure'), POS.adventure, $('#inAdventure').value);
+  place($('#tServer'),    POS.server,    $('#inServer').value);
+  place($('#tNickname'),  POS.nickname,  $('#inNickname').value);
+  place($('#tBirthday'),  POS.birthday,  $('#inBirthday').value);
+  place($('#tMBTI'),      POS.mbti,      $('#inMBTI').value);
+  place($('#tMessage'),   POS.message,   $('#inMessage').value);
+}
+['#inAdventure','#inServer','#inNickname','#inBirthday','#inMBTI','#inMessage'].forEach(id=>{
+  $(id).addEventListener('input', bindAll);
+});
+bindAll();
+
+// 프로필 업로드
+$('#inProfileFile').addEventListener('change', e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev=>{
+    $('#profileImg').src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+// 다운로드
+async function downloadPNG(){
+  await document.fonts.ready;
+  const stage = $('#stage');
+  await Promise.all([...stage.querySelectorAll('img')].map(img=>{
+    if(!img.src) return Promise.resolve();
+    if(img.complete) return Promise.resolve();
+    return new Promise(res=>{ img.onload = img.onerror = res; });
+  }));
+  const canvas = await html2canvas(stage,{
+    backgroundColor:null,
+    scale:3,
+    useCORS:true,
+    imageTimeout:8000
+  });
+  const a=document.createElement('a');
+  a.download='던파동호회_자기소개표.png';
+  a.href=canvas.toDataURL('image/png');
+  a.click();
+}
+$('#btnDownload').addEventListener('click', downloadPNG);
+</script>
 </body>
 </html>
