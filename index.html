@@ -12,66 +12,36 @@
   font-weight:400;
   src:url('//cdn.df.nexon.com/img/common/font/DNFBitBitv2.otf') format('opentype');
 }
-:root{
-  --stage-w: 737px; --stage-h: 737px;
-  --txt-size: 22px;
-}
+:root{ --stage-w:737px; --stage-h:737px; --txt-size:16px; }
+
 *{box-sizing:border-box}
 html,body{margin:0; background:#0b0e12; color:#e9eef5; font-family:'DNFBitBitv2',sans-serif}
-.wrap{
-  display:grid; gap:16px;
-  grid-template-columns: 320px var(--stage-w); /* 패널 넓힘 */
-  padding:18px; place-content:start center;
-}
-.panel{
-  display:flex; flex-direction:column; gap:12px;
-  background:#131821; border:1px solid #202838; border-radius:12px; padding:14px;
-  box-shadow:0 6px 20px rgba(0,0,0,.35);
-}
+.wrap{display:grid; gap:16px; grid-template-columns:320px var(--stage-w); padding:18px; place-content:start center;}
+.panel{display:flex; flex-direction:column; gap:12px; background:#131821; border:1px solid #202838; border-radius:12px; padding:14px; box-shadow:0 6px 20px rgba(0,0,0,.35);}
 .panel h2{margin:0; font-size:20px}
 .row{display:grid; gap:6px}
 .grid2{display:grid; grid-template-columns:1fr 1fr; gap:6px}
 label{font-size:14px; opacity:.9}
-input[type="text"], input[type="file"]{
-  width:100%; padding:8px 10px; border-radius:10px; border:1px solid #2a3348;
-  background:#0f141d; color:#e9eef5; outline:none; font-family:'DNFBitBitv2',sans-serif; font-size:14px;
-}
-button{
-  width:100%; padding:12px; border:0; border-radius:12px; font-weight:700; cursor:pointer;
-  background:#5a7cff; color:#0b0e12; font-family:'DNFBitBitv2',sans-serif;
-}
+input[type="text"],input[type="file"]{width:100%; padding:8px 10px; border-radius:10px; border:1px solid #2a3348; background:#0f141d; color:#e9eef5; outline:none; font-family:'DNFBitBitv2',sans-serif; font-size:14px;}
+button{width:100%; padding:12px; border:0; border-radius:12px; font-weight:700; cursor:pointer; background:#5a7cff; color:#0b0e12;}
 
-/* 체크박스 그룹 */
 .group{border:1px solid #202838; border-radius:10px; padding:8px}
 .group h3{margin:0 0 6px; font-size:16px}
 .group .cols{display:grid; grid-template-columns:1fr 1fr; gap:6px 10px}
 .group label{display:flex; align-items:center; gap:6px; font-size:14px}
 
-/* 스테이지 */
-.stage{
-  position:relative; width:var(--stage-w); height:var(--stage-h); background:#000; overflow:hidden;
-  border-radius:12px; box-shadow:0 12px 28px rgba(0,0,0,.5); border:1px solid #202838;
-}
-.stage img.layer{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:contain; pointer-events:none;
-}
+.stage{position:relative; width:var(--stage-w); height:var(--stage-h); background:#000; overflow:hidden; border-radius:12px; box-shadow:0 12px 28px rgba(0,0,0,.5); border:1px solid #202838;}
+.stage img.layer{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; pointer-events:none;}
 
-/* 텍스트 공통 */
 .t{
   position:absolute; white-space:pre-wrap; color:#fff; pointer-events:none;
   font-size:var(--txt-size); line-height:1.15;
-  text-shadow:
-    0 0 2px rgba(0,0,0,.85),
-    0 0 4px rgba(0,0,0,.85),
-    0 1px 0 rgba(0,0,0,.9),
-    1px 0 0 rgba(0,0,0,.9),
-    -1px 0 0 rgba(0,0,0,.9),
-    0 -1px 0 rgba(0,0,0,.9);
+  text-shadow:0 0 2px rgba(0,0,0,.85),0 0 4px rgba(0,0,0,.85),0 1px 0 rgba(0,0,0,.9),1px 0 0 rgba(0,0,0,.9),-1px 0 0 rgba(0,0,0,.9),0 -1px 0 rgba(0,0,0,.9);
 }
 
-/* 프로필 이미지 박스 */
+/* >>> 네가 준 좌표/크기 고정 <<< */
 #profileBox{
-  position:absolute; left:45.9172px; top:195.516px; width:170px; height:170px;
+  position:absolute; left:34.9172px; top:144.516px; width:125px; height:125px;
   overflow:hidden; border-radius:12px; pointer-events:none;
 }
 #profileImg{width:100%; height:100%; object-fit:cover}
@@ -79,7 +49,6 @@ button{
 </head>
 <body>
 <div class="wrap">
-  <!-- 왼쪽 입력 패널 -->
   <div class="panel">
     <h2>입력 / 옵션</h2>
 
@@ -106,34 +75,86 @@ button{
     <div class="group"><h3>플레이 성향</h3><div class="cols" id="grp-style"></div></div>
     <div class="group"><h3>오픈카톡</h3><div class="cols" id="grp-open"></div></div>
     <div class="group"><h3>디스코드</h3><div class="cols" id="grp-discord"></div></div>
-    <div class="group"><h3>알아지는거</h3><div class="cols" id="grp-social"></div></div>
+    <div class="group"><h3>핥아지는거</h3><div class="cols" id="grp-social"></div></div>
     <div class="group"><h3>셋팅 지적</h3><div class="cols" id="grp-judge"></div></div>
     <div class="group"><h3>소통방법</h3><div class="cols" id="grp-comm"></div></div>
     <div class="group"><h3>저는!</h3><div class="cols" id="grp-self"></div></div>
     <div class="group"><h3>직업</h3><div class="cols" id="grp-job"></div></div>
 
-    <!-- PNG 다운로드 버튼 -->
     <button id="btnDownload">PNG로 다운로드</button>
   </div>
 
-  <!-- 캡처 대상 -->
   <div id="stage" class="stage">
+    <!-- 배경: 같은 폴더 -->
     <img id="bg" class="layer" alt="배경" src="던파동호회 자기소개표.png">
+
+    <!-- 프로필 박스 -->
     <div id="profileBox"><img id="profileImg" alt=""></div>
 
-    <!-- 프로필 텍스트 -->
-    <div id="tAdventure" class="t" style="left:315.563px;top:227.43px;width:325.645px;"></div>
-    <div id="tServer"    class="t" style="left:292.11px; top:267.991px;width:325.645px;"></div>
-    <div id="tNickname"  class="t" style="left:312.604px;top:308.551px;width:325.645px;"></div>
-    <div id="tBirthday"  class="t" style="left:601.664px;top:228.003px;width:325.645px;"></div>
-    <div id="tMBTI"      class="t" style="left:631.012px;top:268.277px;width:271.37px;"></div>
-    <div id="tMessage"   class="t" style="left:673.071px;top:307.551px;width:352.782px;"></div>
+    <!-- 텍스트: 네 좌표 그대로 -->
+    <div id="tAdventure" class="t" style="left:233.563px; top:167.43px; width:325.645px;"></div>
+    <div id="tServer"    class="t" style="left:216.11px;  top:196.991px; width:325.645px;"></div>
+    <div id="tNickname"  class="t" style="left:234px;     top:227px;     width:325.645px;"></div>
+    <div id="tBirthday"  class="t" style="left:441px;     top:167.43px;  width:325.645px;"></div>
+    <div id="tMBTI"      class="t" style="left:458px;     top:196.991px; width:271.37px;"></div>
+    <div id="tMessage"   class="t" style="left:494px;     top:227px;     width:352.782px;"></div>
+
+    <!-- 레이어 이미지들 (초기 display:none, 체크 시 토글) -->
+    <img id="layPlayMorning" class="layer" style="display:none;">
+    <img id="layPlayNoon" class="layer" style="display:none;">
+    <img id="layPlayEvening" class="layer" style="display:none;">
+    <img id="layPlayDawn" class="layer" style="display:none;">
+    <img id="layPlayWeekday" class="layer" style="display:none;">
+    <img id="layPlayWeekend" class="layer" style="display:none;">
+    <img id="layStyleSpecUp" class="layer" style="display:none;">
+    <img id="layStyleStory" class="layer" style="display:none;">
+    <img id="layStyleCodi" class="layer" style="display:none;">
+    <img id="layStyleArena" class="layer" style="display:none;">
+    <img id="layStyleWild" class="layer" style="display:none;">
+    <img id="layStyleSolo" class="layer" style="display:none;">
+    <img id="layStyleFriends" class="layer" style="display:none;">
+    <img id="layStyleGuild" class="layer" style="display:none;">
+    <img id="layOpenChatTalk" class="layer" style="display:none;">
+    <img id="layOpenChatInfo" class="layer" style="display:none;">
+    <img id="layOpenChatParty" class="layer" style="display:none;">
+    <img id="layOpenChatLurk" class="layer" style="display:none;">
+    <img id="layOpenChatTrade" class="layer" style="display:none;">
+    <img id="layDiscordYes" class="layer" style="display:none;">
+    <img id="layDiscordNo" class="layer" style="display:none;">
+    <img id="layMicOn" class="layer" style="display:none;">
+    <img id="layListenOnly" class="layer" style="display:none;">
+    <img id="layMicOff" class="layer" style="display:none;">
+    <img id="laySocialLike" class="layer" style="display:none;">
+    <img id="laySocialDislike" class="layer" style="display:none;">
+    <img id="laySocialOnlyMe" class="layer" style="display:none;">
+    <img id="laySocialDontCare" class="layer" style="display:none;">
+    <img id="layJudgeYes" class="layer" style="display:none;">
+    <img id="layJudgeNo" class="layer" style="display:none;">
+    <img id="layCommStartPlease" class="layer" style="display:none;">
+    <img id="layCommJokeOk" class="layer" style="display:none;">
+    <img id="laySelfNewbie" class="layer" style="display:none;">
+    <img id="laySelfVeteran" class="layer" style="display:none;">
+    <img id="laySelfReturn" class="layer" style="display:none;">
+    <img id="laySelfFunLover" class="layer" style="display:none;">
+    <img id="layJobSlayer" class="layer" style="display:none;">
+    <img id="layJobFighter" class="layer" style="display:none;">
+    <img id="layJobGunner" class="layer" style="display:none;">
+    <img id="layJobMage" class="layer" style="display:none;">
+    <img id="layJobPriest" class="layer" style="display:none;">
+    <img id="layJobThief" class="layer" style="display:none;">
+    <img id="layJobKnight" class="layer" style="display:none;">
+    <img id="layJobLancer" class="layer" style="display:none;">
+    <img id="layJobAgent" class="layer" style="display:none;">
+    <img id="layJobYacha" class="layer" style="display:none;">
+    <img id="layJobSide" class="layer" style="display:none;">
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
 const $ = s => document.querySelector(s);
+
+/* 텍스트 바인딩 */
 function bindAll(){
   $('#tAdventure').textContent = $('#inAdventure').value || '';
   $('#tServer').textContent    = $('#inServer').value || '';
@@ -142,9 +163,8 @@ function bindAll(){
   $('#tMBTI').textContent      = $('#inMBTI').value || '';
   $('#tMessage').textContent   = $('#inMessage').value || '';
 }
-['#inAdventure','#inServer','#inNickname','#inBirthday','#inMBTI','#inMessage'].forEach(id=>{
-  $(id).addEventListener('input', bindAll);
-});
+['#inAdventure','#inServer','#inNickname','#inBirthday','#inMBTI','#inMessage']
+  .forEach(id => $(id).addEventListener('input', bindAll));
 bindAll();
 
 /* 프로필 업로드 */
@@ -155,7 +175,8 @@ $('#inProfileFile').addEventListener('change', e=>{
   r.readAsDataURL(f);
 });
 
-/* 체크박스 그룹 */
+/* 체크박스 그룹 렌더링 */
+const BASE_PATH = "./"; // 같은 폴더
 const GROUPS = {
   time: [
     ['layPlayMorning','21.png','아침'], ['layPlayNoon','22.png','낮'],
@@ -182,68 +203,59 @@ const GROUPS = {
     ['laySocialLike','61.png','좋다'], ['laySocialDislike','62.png','싫다'],
     ['laySocialOnlyMe','63.png','나만 할줄안다'], ['laySocialDontCare','64.png','상관없음'],
   ],
-  judge: [
-    ['layJudgeYes','71.png','좋아요'], ['layJudgeNo','72.png','싫어요'],
-  ],
-  comm: [
-    ['layCommStartPlease','81.png','먼저 말 걸어주세요'], ['layCommJokeOk','82.png','장난치셔도 돼요'],
-  ],
-  self: [
-    ['laySelfNewbie','91.png','뉴비'], ['laySelfVeteran','92.png','고인물'],
-    ['laySelfReturn','93.png','복귀'], ['laySelfFunLover','94.png','븜미좋아'], // 수정
-  ],
-  job: [
+  judge: [['layJudgeYes','71.png','좋아요'], ['layJudgeNo','72.png','싫어요']],
+  comm:  [['layCommStartPlease','81.png','먼저 말 걸어주세요'], ['layCommJokeOk','82.png','장난치셔도 돼요']],
+  self:  [['laySelfNewbie','91.png','뉴비'], ['laySelfVeteran','92.png','고인물'], ['laySelfReturn','93.png','복귀'], ['laySelfFunLover','94.png','븜미좋아']],
+  job:   [
     ['layJobSlayer','101.png','귀검사'], ['layJobFighter','102.png','격투가'],
     ['layJobGunner','103.png','거너'], ['layJobMage','104.png','마법사'],
     ['layJobPriest','105.png','프리스트'], ['layJobThief','106.png','도적'],
     ['layJobKnight','107.png','나이트'], ['layJobLancer','108.png','마창사'],
-    ['layJobAgent','109.png','총검사'], ['layJobYacha','110.png','아처'], // 수정
+    ['layJobAgent','109.png','총검사'], ['layJobYacha','110.png','아처'],
     ['layJobSide','111.png','외전'],
   ],
 };
 
-/* 그룹 렌더링 */
-(function setupGroups(){
-  const mount = (id, items)=>{
-    const holder = document.getElementById('grp-'+id);
-    items.forEach(([layerId, file, label])=>{
-      const lbl = document.createElement('label');
-      const input = document.createElement('input');
-      input.type = 'checkbox'; input.dataset.layer = layerId; input.dataset.src = file;
-      lbl.appendChild(input); lbl.append(' ' + label);
-      holder.appendChild(lbl);
-      const img = document.createElement('img');
-      img.id = layerId; img.className = 'layer'; img.style.display='none';
-      document.getElementById('stage').appendChild(img);
-    });
-  };
-  Object.entries(GROUPS).forEach(([k, arr])=> mount(k, arr));
-
-  document.querySelectorAll('.group .cols').forEach(box=>{
-    box.addEventListener('change', e=>{
-      const t = e.target;
-      if(!t.matches('input[type=checkbox][data-layer]')) return;
-      const img = document.getElementById(t.dataset.layer);
-      if(t.checked){
-        if(!img.src) img.src = t.dataset.src;
-        img.style.display='block';
-      }else img.style.display='none';
-    });
+function makeGroup(mountId, items){
+  const holder = document.getElementById('grp-'+mountId);
+  items.forEach(([layerId, file, label])=>{
+    const lbl = document.createElement('label');
+    const input = document.createElement('input');
+    input.type = 'checkbox'; input.dataset.layer = layerId; input.dataset.file = file;
+    lbl.appendChild(input); lbl.append(' '+label);
+    holder.appendChild(lbl);
   });
-})();
+}
+Object.entries(GROUPS).forEach(([k, arr])=> makeGroup(k, arr));
+
+/* 체크 → 해당 <img>에 src 세팅 + 표시 */
+document.querySelectorAll('.group .cols').forEach(box=>{
+  box.addEventListener('change', e=>{
+    const t = e.target;
+    if(!t.matches('input[type=checkbox][data-layer]')) return;
+    const img = document.getElementById(t.dataset.layer);
+    if(t.checked){
+      if(!img.src || img.src.endsWith('#')) img.src = BASE_PATH + t.dataset.file;
+      img.style.display = 'block';
+    }else{
+      img.style.display = 'none';
+    }
+  });
+});
 
 /* PNG 다운로드 */
 document.getElementById('btnDownload').addEventListener('click', async ()=>{
   await document.fonts.ready;
-  await Promise.all([...document.querySelectorAll('#stage img')].map(img=>{
+  const stage = document.getElementById('stage');
+  await Promise.all([...stage.querySelectorAll('img')].map(img=>{
     if(!img.src) return Promise.resolve();
     if(img.complete) return Promise.resolve();
     return new Promise(res=>{ img.onload = img.onerror = res; });
   }));
-  const canvas = await html2canvas(document.getElementById('stage'), { backgroundColor:null, scale:3 });
-  const a = document.createElement('a');
-  a.download = '던파동호회_자기소개표.png';
-  a.href = canvas.toDataURL('image/png');
+  const canvas = await html2canvas(stage, { backgroundColor:null, scale:3 });
+  const a=document.createElement('a');
+  a.download='던파동호회_자기소개표.png';
+  a.href=canvas.toDataURL('image/png');
   a.click();
 });
 </script>
