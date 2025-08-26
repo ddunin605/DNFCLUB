@@ -39,7 +39,7 @@ button{width:100%; padding:12px; border:0; border-radius:12px; font-weight:700; 
   text-shadow:0 0 2px rgba(0,0,0,.85),0 0 4px rgba(0,0,0,.85),0 1px 0 rgba(0,0,0,.9),1px 0 0 rgba(0,0,0,.9),-1px 0 0 rgba(0,0,0,.9),0 -1px 0 rgba(0,0,0,.9);
 }
 
-/* >>> 네가 준 좌표/크기 고정 <<< */
+
 #profileBox{
   position:absolute; left:34.9172px; top:144.516px; width:125px; height:125px;
   overflow:hidden; border-radius:12px; pointer-events:none;
@@ -70,7 +70,7 @@ button{width:100%; padding:12px; border:0; border-radius:12px; font-weight:700; 
       <div><label>하고싶은 말</label><input id="inMessage" type="text"></div>
     </div>
 
-    <!-- 체크박스 그룹들 -->
+
     <div class="group"><h3>플레이 시간</h3><div class="cols" id="grp-time"></div></div>
     <div class="group"><h3>플레이 성향</h3><div class="cols" id="grp-style"></div></div>
     <div class="group"><h3>오픈카톡</h3><div class="cols" id="grp-open"></div></div>
@@ -85,13 +85,13 @@ button{width:100%; padding:12px; border:0; border-radius:12px; font-weight:700; 
   </div>
 
   <div id="stage" class="stage">
-    <!-- 배경: 같은 폴더 -->
+
     <img id="bg" class="layer" alt="배경" src="던파동호회 자기소개표.png">
 
-    <!-- 프로필 박스 -->
+
     <div id="profileBox"><img id="profileImg" alt=""></div>
 
-    <!-- 텍스트: 네 좌표 그대로 -->
+
     <div id="tAdventure" class="t" style="left:233.563px; top:167.43px; width:325.645px;"></div>
     <div id="tServer"    class="t" style="left:216.11px;  top:196.991px; width:325.645px;"></div>
     <div id="tNickname"  class="t" style="left:234px;     top:227px;     width:325.645px;"></div>
@@ -99,7 +99,7 @@ button{width:100%; padding:12px; border:0; border-radius:12px; font-weight:700; 
     <div id="tMBTI"      class="t" style="left:458px;     top:196.991px; width:271.37px;"></div>
     <div id="tMessage"   class="t" style="left:494px;     top:227px;     width:352.782px;"></div>
 
-    <!-- 레이어 이미지들 (초기 display:none, 체크 시 토글) -->
+
     <img id="layPlayMorning" class="layer" style="display:none;">
     <img id="layPlayNoon" class="layer" style="display:none;">
     <img id="layPlayEvening" class="layer" style="display:none;">
@@ -154,7 +154,7 @@ button{width:100%; padding:12px; border:0; border-radius:12px; font-weight:700; 
 <script>
 const $ = s => document.querySelector(s);
 
-/* 텍스트 바인딩 */
+
 function bindAll(){
   $('#tAdventure').textContent = $('#inAdventure').value || '';
   $('#tServer').textContent    = $('#inServer').value || '';
@@ -167,7 +167,6 @@ function bindAll(){
   .forEach(id => $(id).addEventListener('input', bindAll));
 bindAll();
 
-/* 프로필 업로드 */
 $('#inProfileFile').addEventListener('change', e=>{
   const f = e.target.files[0]; if(!f) return;
   const r = new FileReader();
@@ -175,7 +174,7 @@ $('#inProfileFile').addEventListener('change', e=>{
   r.readAsDataURL(f);
 });
 
-/* 체크박스 그룹 렌더링 */
+
 const BASE_PATH = "./"; // 같은 폴더
 const GROUPS = {
   time: [
@@ -228,7 +227,7 @@ function makeGroup(mountId, items){
 }
 Object.entries(GROUPS).forEach(([k, arr])=> makeGroup(k, arr));
 
-/* 체크 → 해당 <img>에 src 세팅 + 표시 */
+
 document.querySelectorAll('.group .cols').forEach(box=>{
   box.addEventListener('change', e=>{
     const t = e.target;
@@ -243,7 +242,7 @@ document.querySelectorAll('.group .cols').forEach(box=>{
   });
 });
 
-/* PNG 다운로드 */
+
 document.getElementById('btnDownload').addEventListener('click', async ()=>{
   await document.fonts.ready;
   const stage = document.getElementById('stage');
@@ -261,3 +260,4 @@ document.getElementById('btnDownload').addEventListener('click', async ()=>{
 </script>
 </body>
 </html>
+
