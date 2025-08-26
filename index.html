@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>던파동호회 자기소개표 - 채우기</title>
 
-<!-- 비트비트체 -->
+<!-- 전역 글꼴: 비트비트체 하나로 통일 -->
 <style>
 @font-face{
   font-family:'DNFBitBitv2';
@@ -13,50 +13,65 @@
   font-weight:400;
   src:url('//cdn.df.nexon.com/img/common/font/DNFBitBitv2.otf') format('opentype');
 }
-</style>
+:root{ --stage-w: 737px; --stage-h: 737px; }
 
-<style>
-  :root{
-    --stage-w: 737px;
-    --stage-h: 737px;
-  }
-  html,body{margin:0; background:#0b0e12; color:#e9eef5; font-family:system-ui,-apple-system,Segoe UI,Roboto,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;}
-  .wrap{display:grid; gap:16px; grid-template-columns: minmax(280px, 360px) var(--stage-w); padding:18px; place-content:start center;}
-  .panel{background:#131821; border:1px solid #202838; border-radius:12px; padding:14px; box-shadow:0 6px 20px rgba(0,0,0,.35);}
-  .panel h2{margin:0 0 10px; font-size:18px}
-  .panel .row{display:grid; gap:8px; margin-bottom:10px}
-  .panel label{font-size:13px; opacity:.9}
-  .panel input[type="text"],
-  .panel textarea{width:100%; padding:10px 12px; border-radius:10px; border:1px solid #2a3348; background:#0f141d; color:#e9eef5; outline:none;}
-  .panel textarea{min-height:72px; resize:vertical}
-  .panel .grid2{display:grid; grid-template-columns:1fr 1fr; gap:8px}
-  .panel button{width:100%; padding:12px; border:0; border-radius:12px; font-weight:700; cursor:pointer; background:#5a7cff; color:#0b0e12}
+html,body{
+  margin:0;
+  background:#0b0e12;
+  color:#e9eef5;
+  font-family:'DNFBitBitv2', sans-serif; /* 전역 기본 폰트 */
+}
+.wrap{
+  display:grid; gap:16px;
+  grid-template-columns:minmax(280px,360px) var(--stage-w);
+  padding:18px; place-content:start center;
+}
+.panel{
+  background:#131821; border:1px solid #202838; border-radius:12px; padding:14px;
+  box-shadow:0 6px 20px rgba(0,0,0,.35);
+}
+.panel h2{margin:0 0 10px; font-size:18px}
+.panel .row{display:grid; gap:8px; margin-bottom:10px}
+.panel label{font-size:13px; opacity:.9}
+.panel input[type="text"],
+.panel input[type="file"],
+.panel textarea{
+  width:100%; padding:10px 12px; border-radius:10px; border:1px solid #2a3348;
+  background:#0f141d; color:#e9eef5; outline:none; font-family:'DNFBitBitv2',sans-serif;
+}
+.panel .grid2{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+.panel button{
+  width:100%; padding:12px; border:0; border-radius:12px; font-weight:700; cursor:pointer;
+  background:#5a7cff; color:#0b0e12; font-family:'DNFBitBitv2',sans-serif;
+}
 
-  /* 캡처 대상 */
-  .stage{position:relative; width:var(--stage-w); height:var(--stage-h); background:#000; overflow:hidden; border-radius:12px; box-shadow:0 12px 28px rgba(0,0,0,.5); border:1px solid #202838;}
-  .stage img.layer{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none;}
+/* 캡처 대상 */
+.stage{
+  position:relative; width:var(--stage-w); height:var(--stage-h); background:#000; overflow:hidden;
+  border-radius:12px; box-shadow:0 12px 28px rgba(0,0,0,.5); border:1px solid #202838;
+}
+.stage img.layer{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:contain; pointer-events:none;
+}
 
-  /* 공통 텍스트 레이어 */
-  .t{position:absolute; white-space:pre-wrap; color:#fff; pointer-events:none;
-    text-shadow:
-      0 0 2px rgba(0,0,0,.85),
-      0 0 4px rgba(0,0,0,.85),
-      0 1px 0 rgba(0,0,0,.9),
-      1px 0 0 rgba(0,0,0,.9),
-      -1px 0 0 rgba(0,0,0,.9),
-      0 -1px 0 rgba(0,0,0,.9);
-  }
+/* 자기소개표 위에 찍히는 텍스트 공통 */
+.t{
+  position:absolute; white-space:pre-wrap; color:#fff; pointer-events:none;
+  font-family:'DNFBitBitv2', sans-serif; font-size:5.5pt; font-weight:400; line-height:1.15;
+  text-shadow:
+    0 0 2px rgba(0,0,0,.85),
+    0 0 4px rgba(0,0,0,.85),
+    0 1px 0 rgba(0,0,0,.9),
+    1px 0 0 rgba(0,0,0,.9),
+    -1px 0 0 rgba(0,0,0,.9),
+    0 -1px 0 rgba(0,0,0,.9);
+}
 
-  /* 프로필란 전용: 비트비트체 + 5.5pt */
-  .bit{font-family:'DNFBitBitv2', system-ui, sans-serif; font-size:5.5pt; font-weight:400; line-height:1.15;}
-
-  /* 프로필 이미지 마스크 */
-  #profileBox{
-    position:absolute; left:39px; top:192px;
-    width:156px; height:156px;
-    overflow:hidden; border-radius:12px; pointer-events:none; text-shadow:none;
-  }
-  #profileImg{width:100%; height:100%; object-fit:cover;}
+/* 프로필 이미지 마스크 (위치/크기는 JS에서 비율계산) */
+#profileBox{
+  position:absolute; overflow:hidden; border-radius:12px; pointer-events:none; text-shadow:none;
+}
+#profileImg{width:100%; height:100%; object-fit:cover;}
 </style>
 </head>
 <body>
@@ -107,29 +122,34 @@
     </div>
   </div>
 
-  <!-- ===== 캡처 대상 ===== -->
+  <!-- 캡처 대상 -->
   <div id="stage" class="stage" aria-label="capture-target">
-    <!-- 배경 (GitHub Raw 링크) -->
+    <!-- 배경 (GitHub RAW) -->
     <img id="bg" class="layer" alt="배경"
-         src="https://raw.githubusercontent.com/ddunin605/DNFCLUB/c23aaf1943ca57a287fcc306da27b1080f3ce5d2/%EB%8D%98%ED%8C%8C%EB%8F%99%ED%98%B8%ED%9A%8C%20%EC%9E%90%EA%B8%B0%EC%86%8C%EA%B0%9C%ED%91%9C.png"
-         crossOrigin="anonymous" />
+      src="https://raw.githubusercontent.com/ddunin605/DNFCLUB/c23aaf1943ca57a287fcc306da27b1080f3ce5d2/%EB%8D%98%ED%8C%8C%EB%8F%99%ED%98%B8%ED%9A%8C%20%EC%9E%90%EA%B8%B0%EC%86%8C%EA%B0%9C%ED%91%9C.png"
+      crossOrigin="anonymous" />
 
     <!-- 프로필 사진 -->
     <div id="profileBox"><img id="profileImg" alt=""></div>
 
-    <!-- 프로필란 텍스트 -->
-    <div id="tAdventure" class="t bit"></div>
-    <div id="tServer"    class="t bit"></div>
-    <div id="tNickname"  class="t bit"></div>
-    <div id="tBirthday"  class="t bit"></div>
-    <div id="tMBTI"      class="t bit"></div>
-    <div id="tMessage"   class="t bit"></div>
+    <!-- 프로필란 텍스트 (모두 비트비트체 5.5pt) -->
+    <div id="tAdventure" class="t"></div>
+    <div id="tServer"    class="t"></div>
+    <div id="tNickname"  class="t"></div>
+    <div id="tBirthday"  class="t"></div>
+    <div id="tMBTI"      class="t"></div>
+    <div id="tMessage"   class="t"></div>
   </div>
 </div>
 
 <!-- html2canvas -->
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
+/* ===== 좌표 입력(기준 737×737) ===== */
+const BASE = { w: 737, h: 737 };     // 네가 준 좌표 기준
+// 프로필 이미지 위치/크기
+const PROFILE = { x:39, y:192, w:156, h:156 };
+// 텍스트 좌표
 const POS = {
   adventure: { x:225.2, y:228.05, width:240 },
   server:    { x:277.93, y:258.68, width:240 },
@@ -140,40 +160,72 @@ const POS = {
 };
 
 const $ = s => document.querySelector(s);
-function place(el, cfg, txt){
-  el.textContent = txt || '';
-  el.style.left = (cfg.x||0) + 'px';
-  el.style.top  = (cfg.y||0) + 'px';
-  if (cfg.width) el.style.width = cfg.width + 'px';
+const stage = $('#stage');
+const bg = $('#bg');
+
+/* 비율 배치 유틸리티 */
+function toPXX(x){ return x / BASE.w * stage.clientWidth; }
+function toPXY(y){ return y / BASE.h * stage.clientHeight; }
+function setRect(el, x, y, w, h){
+  el.style.left = toPXX(x) + 'px';
+  el.style.top  = toPXY(y) + 'px';
+  if (w != null) el.style.width  = toPXX(w) + 'px';
+  if (h != null) el.style.height = toPXY(h) + 'px';
 }
+function placeText(el, cfg, txt){
+  el.textContent = txt || '';
+  setRect(el, cfg.x, cfg.y, cfg.width ?? 240, null);
+}
+
+/* 입력 → 반영 */
 function bindAll(){
-  place($('#tAdventure'), POS.adventure, $('#inAdventure').value);
-  place($('#tServer'),    POS.server,    $('#inServer').value);
-  place($('#tNickname'),  POS.nickname,  $('#inNickname').value);
-  place($('#tBirthday'),  POS.birthday,  $('#inBirthday').value);
-  place($('#tMBTI'),      POS.mbti,      $('#inMBTI').value);
-  place($('#tMessage'),   POS.message,   $('#inMessage').value);
+  placeText($('#tAdventure'), POS.adventure, $('#inAdventure').value);
+  placeText($('#tServer'),    POS.server,    $('#inServer').value);
+  placeText($('#tNickname'),  POS.nickname,  $('#inNickname').value);
+  placeText($('#tBirthday'),  POS.birthday,  $('#inBirthday').value);
+  placeText($('#tMBTI'),      POS.mbti,      $('#inMBTI').value);
+  placeText($('#tMessage'),   POS.message,   $('#inMessage').value);
 }
 ['#inAdventure','#inServer','#inNickname','#inBirthday','#inMBTI','#inMessage'].forEach(id=>{
   $(id).addEventListener('input', bindAll);
 });
-bindAll();
 
-// 프로필 업로드
+/* 프로필 업로드 */
 $('#inProfileFile').addEventListener('change', e=>{
   const file = e.target.files[0];
   if(!file) return;
   const reader = new FileReader();
-  reader.onload = ev=>{
-    $('#profileImg').src = ev.target.result;
-  };
+  reader.onload = ev=> $('#profileImg').src = ev.target.result;
   reader.readAsDataURL(file);
 });
 
-// 다운로드
+/* 배경 로드 후: 스테이지를 자연크기에 맞추고 비율 배치 */
+async function initLayout(){
+  await new Promise(res=>{
+    if (bg.complete) return res();
+    bg.onload = bg.onerror = res;
+  });
+  const w = bg.naturalWidth || BASE.w;
+  const h = bg.naturalHeight || BASE.h;
+  document.documentElement.style.setProperty('--stage-w', w + 'px');
+  document.documentElement.style.setProperty('--stage-h', h + 'px');
+
+  requestAnimationFrame(()=>{
+    setRect($('#profileBox'), PROFILE.x, PROFILE.y, PROFILE.w, PROFILE.h);
+    bindAll();
+  });
+}
+initLayout();
+
+/* 리사이즈 대응(혹시 외부 스타일 바뀔 경우 대비) */
+window.addEventListener('resize', ()=>{
+  setRect($('#profileBox'), PROFILE.x, PROFILE.y, PROFILE.w, PROFILE.h);
+  bindAll();
+});
+
+/* PNG 다운로드 */
 async function downloadPNG(){
-  await document.fonts.ready;
-  const stage = $('#stage');
+  await document.fonts.ready; // 비트비트체 로딩 보장
   await Promise.all([...stage.querySelectorAll('img')].map(img=>{
     if(!img.src) return Promise.resolve();
     if(img.complete) return Promise.resolve();
@@ -190,7 +242,7 @@ async function downloadPNG(){
   a.href=canvas.toDataURL('image/png');
   a.click();
 }
-$('#btnDownload').addEventListener('click', downloadPNG);
+document.getElementById('btnDownload').addEventListener('click', downloadPNG);
 </script>
 </body>
 </html>
